@@ -13,13 +13,13 @@ private:
     int secondDim;
     int thirdDim;
     // Turn 3d index to 1d index
-    int flattenIndex(uint i, uint j, uint k);
+    int flattenIndex(uint i, uint j, uint k) const;
 public:
     Matrix(uint n, uint m, uint p);
     // Set element in matrix
     void set(uint i, uint j, uint k, const elemType& element);
     // Get element from matrix
-    elemType get(uint i, uint j, uint k);
+    elemType get(uint i, uint j, uint k) const;
     std::vector<uint> size();
     
 };
@@ -32,12 +32,14 @@ Matrix<elemType>::Matrix(uint n, uint m, uint p): container(n * m * p) {
 }
 
 template<typename elemType>
-int Matrix<elemType>::flattenIndex(uint i, uint j, uint k) {
+int Matrix<elemType>::flattenIndex(uint i, uint j, uint k) const {
+    if(i >= firstDim || j >= secondDim || k >= thirdDim) 
+        throw std::out_of_range("Trying to access an element out of range");
     return i * secondDim * thirdDim + j * secondDim + k ;
 }
 
 template<typename elemType>
-elemType Matrix<elemType>::get(uint i, uint j, uint k) {
+elemType Matrix<elemType>::get(uint i, uint j, uint k) const {
     return container[flattenIndex(i, j, k)];
 }
 
