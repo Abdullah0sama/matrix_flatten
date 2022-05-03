@@ -9,9 +9,9 @@ class Matrix
 private:
     typedef unsigned int uint;
     std::vector<elemType> container;
-    int firstDim;
-    int secondDim;
-    int thirdDim;
+    uint firstDim;
+    uint secondDim;
+    uint thirdDim;
     // Turn 3d index to 1d index
     int flattenIndex(uint i, uint j, uint k) const;
 public:
@@ -20,7 +20,7 @@ public:
     void set(uint i, uint j, uint k, const elemType& element);
     // Get element from matrix
     elemType get(uint i, uint j, uint k) const;
-    std::vector<uint> size();
+    std::vector<uint> size() const;
     
 };
 
@@ -48,4 +48,8 @@ void Matrix<elemType>::set(uint i, uint j, uint k, const elemType& element) {
     container[flattenIndex(i, j, k)] = element;
 }
 
+template<typename elemType>
+std::vector<uint> Matrix<elemType>::size() const {
+    return {firstDim, secondDim, thirdDim};
+}
 #endif // MATRIX_3D
