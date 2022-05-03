@@ -35,7 +35,7 @@ template<typename elemType>
 int Matrix<elemType>::flattenIndex(uint i, uint j, uint k) const {
     if(i >= firstDim || j >= secondDim || k >= thirdDim) 
         throw std::out_of_range("Trying to access an element out of range");
-    return i * secondDim * thirdDim + j * secondDim + k ;
+    return i * secondDim * thirdDim + j * thirdDim + k ;
 }
 
 template<typename elemType>
