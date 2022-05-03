@@ -1,45 +1,48 @@
 #if !defined(MATRIX_3D)
 #define MATRIX_3D
 
-#include<vector>
-
+#include <vector>
+#include <stdexcept>
 template<typename elemType>
 class Matrix
 {
 private:
+    typedef unsigned int uint;
     std::vector<elemType> container;
     int firstDim;
     int secondDim;
     int thirdDim;
     // Turn 3d index to 1d index
-    int flattenIndex(int i, int j, int k);
+    int flattenIndex(uint i, uint j, uint k);
 public:
-    Matrix(int n, int m, int p);
+    Matrix(uint n, uint m, uint p);
     // Set element in matrix
-    void set(int i, int j, int k, const elemType& element);
+    void set(uint i, uint j, uint k, const elemType& element);
     // Get element from matrix
-    elemType get(int i, int j, int k);
+    elemType get(uint i, uint j, uint k);
+    std::vector<uint> size();
+    
 };
 
 template<typename elemType>
-Matrix<elemType>::Matrix(int n, int m, int p): container(n * m * p) {
+Matrix<elemType>::Matrix(uint n, uint m, uint p): container(n * m * p) {
     firstDim = n;
     secondDim = m;
-    thirdDim = p;
+    thirdDim = p;    
 }
 
 template<typename elemType>
-int Matrix<elemType>::flattenIndex(int i, int j, int k) {
+int Matrix<elemType>::flattenIndex(uint i, uint j, uint k) {
     return i * secondDim * thirdDim + j * secondDim + k ;
 }
 
 template<typename elemType>
-elemType Matrix<elemType>::get(int i, int j, int k) {
+elemType Matrix<elemType>::get(uint i, uint j, uint k) {
     return container[flattenIndex(i, j, k)];
 }
 
 template<typename elemType>
-void Matrix<elemType>::set(int i, int j, int k, const elemType& element) {
+void Matrix<elemType>::set(uint i, uint j, uint k, const elemType& element) {
     container[flattenIndex(i, j, k)] = element;
 }
 
